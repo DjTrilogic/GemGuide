@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,7 +8,7 @@ namespace GemGuide;
 
 public class PobCodeImporter
 {
-    public static (List<SkillSet> parsedSets, List<string> errors) GetGemSets(string code)
+    public static (List<SkillSet> parsedSets, List<string> errors, string className) GetGemSets(string code)
     {
         try
         {
@@ -17,6 +17,8 @@ public class PobCodeImporter
             //because loading xml securely is surprisingly hard
             xmlDocument.Load(XmlReader.Create(new StringReader(xml)));
             var root = xmlDocument.GetElementsByTagName("PathOfBuilding").Cast<XmlNode>().First();
+            var buildNode = root.ChildNodes.Cast<XmlNode>().FirstOrDefault(x => x.Name == "Build");
+            var className = buildNode?.Attributes?.GetNamedItem("className")?.Value;
             var skillsNode = root.ChildNodes.Cast<XmlNode>().First(x => x.Name == "Skills");
             var setNodes = skillsNode.ChildNodes.Cast<XmlNode>().Where(x => x.Name == "SkillSet");
             var setAndSkillNodes = setNodes.Select(sn => (sn, skills: sn.ChildNodes.Cast<XmlNode>().Where(x => x.Name == "Skill")));
@@ -60,17 +62,18 @@ public class PobCodeImporter
                                 ? b
                                 : Push($"{g.FindXPath()}({gemName}).quality ('{enabledString}') cannot be parsed, using true as default", true)
                             : Push($"{g.FindXPath()}({gemName}) does not have the enabled attribute, using true as default", true);
-                        return new Gem(level, gemName, quality, enabled);
+                        var nameSpec = g.Attributes?.GetNamedItem("nameSpec")?.Value;
+                        return new Gem(level, gemName, quality, enabled, nameSpec);
                     }).ToList();
                     return new GemSet(skillLabel, gems);
                 }).ToList();
                 return new SkillSet(setName, skills);
             }).ToList();
-            return (parsedSets, errors);
+            return (parsedSets, errors, className);
         }
         catch (Exception ex)
         {
-            return ([], [ex.ToString()]);
+            return ([], [ex.ToString()], null);
         }
     }
 
