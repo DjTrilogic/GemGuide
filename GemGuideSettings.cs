@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
@@ -24,9 +25,14 @@ public class GemGuideSettings : ISettings
     public ToggleNode ShowGearSwitchesForSocketedLinks { get; set; } = new ToggleNode(true);
     public ToggleNode ReuseRemainingSocketsInLink { get; set; } = new ToggleNode(true);
     public ToggleNode ShowGuideWindow { get; set; } = new ToggleNode(true);
+    public ToggleNode ShowEmptyGemSets { get; set; } = new ToggleNode(true);
+    public ToggleNode ShowCompletedGemSets { get; set; } = new ToggleNode(true);
+    public ToggleNode ShowEquippedButNotRequiredGems { get; set; } = new ToggleNode(true);
+    public ToggleNode ShowGemAcquisition { get; set; } = new ToggleNode(true);
     public ToggleNode ShowPurchaseUpgrades { get; set; } = new ToggleNode(true);
     public ToggleNode ConsiderExistingUpgradesWhenEvaluationPurchaseUpgrades { get; set; } = new ToggleNode(true);
     public ColorNode PurchaseUpgradesFrameColor { get; set; } = new ColorNode(Color.Green.ToSharpDx());
+    public ColorNode PurchaseRequiredGemsFrameColor { get; set; } = new ColorNode(Color.Cyan.ToSharpDx());
     public RangeNode<int> PurchaseUpgradesFrameThickness { get; set; } = new(5, 0, 10);
     public ButtonNode ReloadProfiles { get; set; } = new ButtonNode();
 
@@ -41,6 +47,8 @@ public class ProfileSettings
     private bool _autoImport = true;
     private Task<ImportTaskResult> _importTask;
 
+    private static readonly string[] CharacterClasses = ["Witch", "Shadow", "Ranger", "Duelist", "Marauder", "Templar", "Scion"];
+
     public void Render(GemGuide plugin)
     {
         var activeProfile = plugin.GetActiveProfile();
@@ -48,6 +56,16 @@ public class ProfileSettings
                 (gp, p) => ImGuiHelpers.WhitespaceSeparatedContains(gp.Name, p), gp => gp.Name))
         {
             plugin.Settings.ActiveProfile = activeProfile.Name;
+        }
+
+        ImGui.Text("Character class (for gem acquisition):");
+        var currentClass = activeProfile.Profile.CharacterClass ?? "";
+        var classIndex = Array.IndexOf(CharacterClasses, currentClass);
+        if (classIndex < 0) classIndex = 0;
+        if (ImGui.Combo("##gemguide_class", ref classIndex, CharacterClasses, CharacterClasses.Length))
+        {
+            activeProfile.Profile.CharacterClass = CharacterClasses[classIndex];
+            plugin.SaveProfile(activeProfile);
         }
 
         if (_importTask == null)
@@ -61,8 +79,8 @@ public class ProfileSettings
                 _importTask = Task.Run(async () =>
                 {
                     var code = await new PobbinTreeImporter().GetPobCode(input, CancellationToken.None);
-                    var gemSets = PobCodeImporter.GetGemSets(code);
-                    return new ImportTaskResult(gemSets.parsedSets, gemSets.errors, new HashSet<SkillSet>());
+                    var (parsedSets, errors, className) = PobCodeImporter.GetGemSets(code);
+                    return new ImportTaskResult(parsedSets, errors, new HashSet<SkillSet>(), className);
                 });
                 _importInput = "";
             }
@@ -73,8 +91,8 @@ public class ProfileSettings
                 DebugWindow.LogMsg($"Starting PoB import of {_importInput}");
                 _importTask = Task.Run(() =>
                 {
-                    var gemSets = PobCodeImporter.GetGemSets(input);
-                    return new ImportTaskResult(gemSets.parsedSets, gemSets.errors, new HashSet<SkillSet>());
+                    var (parsedSets, errors, className) = PobCodeImporter.GetGemSets(input);
+                    return new ImportTaskResult(parsedSets, errors, new HashSet<SkillSet>(), className);
                 });
                 _importInput = "";
             }
@@ -132,9 +150,14 @@ public class ProfileSettings
 
                 if (ImGui.Button("Add"))
                 {
+                    var profile = new GemProfile
+                    {
+                        SkillSets = importResult.skillSets.Except(importResult.excludedSets).ToList(),
+                        CharacterClass = importResult.characterClass
+                    };
                     plugin.AddAndSwitchToProfile(new NamedGemProfile(
                         plugin.GetFreeProfileName(string.IsNullOrWhiteSpace(importResult.ProfileName) ? "Unnamed" : importResult.ProfileName),
-                        new GemProfile() { SkillSets = importResult.skillSets.Except(importResult.excludedSets).ToList() }));
+                        profile));
                     _importTask = null;
                 }
 
@@ -220,7 +243,7 @@ public class ProfileSettings
     }
 }
 
-internal record ImportTaskResult(List<SkillSet> skillSets, List<string> errors, HashSet<SkillSet> excludedSets)
+internal record ImportTaskResult(List<SkillSet> skillSets, List<string> errors, HashSet<SkillSet> excludedSets, string characterClass = null)
 {
     public string ProfileName = "";
 }

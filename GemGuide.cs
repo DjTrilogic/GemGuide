@@ -1,10 +1,11 @@
-﻿using ExileCore;
+using ExileCore;
 using ExileCore.PoEMemory.MemoryObjects;
 using System.Collections.Generic;
 using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using ExileCore.PoEMemory;
 using ExileCore.PoEMemory.Components;
@@ -80,6 +81,90 @@ public class GemGuide : BaseSettingsPlugin<GemGuideSettings>
         return Directory.CreateDirectory(Path.Join(ConfigDirectory, "Profiles"));
     }
 
+    // Class -> Act -> Quest -> Gem names (from wiki JSON)
+    private Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> _questAcquisition;
+    private Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> _vendorAcquisition;
+
+    private static string GetPluginDirectory()
+    {
+        try
+        {
+            var asm = Assembly.GetExecutingAssembly();
+            var loc = asm?.Location;
+            if (!string.IsNullOrEmpty(loc))
+            {
+                var dir = Path.GetDirectoryName(loc);
+                if (!string.IsNullOrEmpty(dir))
+                    return dir;
+            }
+        }
+        catch { /* ignore */ }
+        return null;
+    }
+
+    private void EnsureAcquisitionData()
+    {
+        if (_questAcquisition != null)
+            return;
+        _questAcquisition = new Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>();
+        _vendorAcquisition = new Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>();
+        var configDir = ConfigDirectory;
+        var pluginDir = GetPluginDirectory();
+        foreach (var baseDir in new[] { configDir, pluginDir })
+        {
+            if (string.IsNullOrEmpty(baseDir))
+                continue;
+            var questPath = Path.Join(baseDir, "quest_gem_rewards_by_class.json");
+            var vendorPath = Path.Join(baseDir, "vendor_gem_rewards_by_class.json");
+            try
+            {
+                if (File.Exists(questPath))
+                {
+                    _questAcquisition = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>>(File.ReadAllText(questPath));
+                    if (_questAcquisition == null)
+                        _questAcquisition = new Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>();
+                }
+                if (File.Exists(vendorPath))
+                {
+                    _vendorAcquisition = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>>(File.ReadAllText(vendorPath));
+                    if (_vendorAcquisition == null)
+                        _vendorAcquisition = new Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>();
+                }
+                if (_questAcquisition.Count > 0 || _vendorAcquisition.Count > 0)
+                    break;
+            }
+            catch (Exception ex)
+            {
+                LogError($"Failed to load gem acquisition data from {baseDir}: {ex.Message}");
+            }
+        }
+    }
+
+    private const string SkipQuestAcquisition = "A Fixture of Fate";
+
+    private List<(string act, string quest)> GetAcquisitionForGem(
+        Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> data,
+        string characterClass,
+        string gemName)
+    {
+        if (string.IsNullOrEmpty(characterClass) || string.IsNullOrEmpty(gemName) || data == null)
+            return [];
+        if (!data.TryGetValue(characterClass, out var byAct))
+            return [];
+        var list = new List<(string act, string quest)>();
+        foreach (var (act, quests) in byAct)
+        {
+            foreach (var (quest, gems) in quests)
+            {
+                if (string.Equals(quest, SkipQuestAcquisition, StringComparison.OrdinalIgnoreCase))
+                    continue;
+                if (gems?.Contains(gemName, StringComparer.OrdinalIgnoreCase) == true)
+                    list.Add((act, quest));
+            }
+        }
+        return list;
+    }
+
     internal void SaveProfile(NamedGemProfile profile)
     {
         File.WriteAllText(Path.Join(GetProfilesDirectory().FullName, $"{profile.Name}.json"), JsonSerializer.Serialize(profile.Profile));
@@ -148,66 +233,79 @@ public class GemGuide : BaseSettingsPlugin<GemGuideSettings>
                     return;
                 }
 
-                (matchDict, moveGemMatches) = GetGemData();
+                (matchDict, moveGemMatches, var allEquippedGemIds) = GetGemData();
 
                 var ownedGems = ItemData.StaticPlayerData.OwnedGems.GroupBy(x => x.BaseName).ToDictionary(x => x.Key, x => x.Count());
                 foreach (var gemSet in activeSet.GemSets)
                 {
-                    GemSetText(gemSet, false);
+                    var isEmpty = gemSet.Gems == null || !gemSet.Gems.Any();
+                    if (isEmpty && !Settings.ShowEmptyGemSets)
+                        continue;
                     var slottedGems = new HashSet<Gem>();
                     var freeSlots = new Dictionary<SkillGemDatSocketType, int>();
-                    if (matchDict.TryGetValue(gemSet, out var slottedIn))
+                    var slottedIn = default((Entity item, List<(string Id, SocketColor socketColor)> sockets));
+                    var moveTo = default((Entity item, List<(string Id, SocketColor socketColor)> link));
+                    if (matchDict.TryGetValue(gemSet, out var slottedInVal))
                     {
-                        ImGui.SameLine();
-                        var itemName = GetItemName(slottedIn.item);
+                        slottedIn = slottedInVal;
                         slottedGems = gemSet.Gems.IntersectBy(slottedIn.sockets.Select(x => x.Id).Where(x => x != null), g => g.VariantId).ToHashSet();
                         freeSlots = slottedIn.sockets.Where(x => x.Id == null || !gemSet.Gems.Select(g => g.VariantId).Contains(x.Id)).GroupBy(x => x.socketColor)
                             .ToDictionary(x => (SkillGemDatSocketType)x.Key, x => x.Count());
+                    }
+                    if (moveGemMatches.TryGetValue(gemSet, out var moveToVal))
+                    {
+                        moveTo = moveToVal;
+                        if (slottedIn == default)
+                            freeSlots = moveTo.link.GroupBy(x => x.Item2).ToDictionary(x => (SkillGemDatSocketType)x.Key, x => x.Count());
+                    }
+                    var isCompleted = !isEmpty && slottedGems.Count == gemSet.Gems.Count;
+                    if (isCompleted && !Settings.ShowCompletedGemSets)
+                        continue;
+
+                    GemSetText(gemSet, false);
+                    if (slottedIn != default)
+                    {
+                        ImGui.SameLine();
+                        var itemName = GetItemName(slottedIn.item);
                         ImGui.Text($"(in {itemName}");
                         if (Settings.ShowGearLinks)
                         {
                             ImGui.SameLine(0, 0);
                             DrawSocketLink(slottedIn.sockets);
                         }
-
                         ImGui.SameLine(0, 0);
                         ImGui.Text(")");
                     }
-
-                    if (moveGemMatches.TryGetValue(gemSet, out var moveTo))
+                    if (moveTo != default && (slottedIn == default || Settings.ShowGearSwitchesForSocketedLinks))
                     {
                         var itemName = GetItemName(moveTo.item);
-                        if (slottedIn == default)
+                        ImGui.SameLine();
+                        ImGui.TextColored(Color.Yellow.ToImguiVec4(), $"(equippable in {itemName}");
+                        if (Settings.ShowGearLinks)
                         {
-                            freeSlots = moveTo.link.GroupBy(x => x.Item2)
-                                .ToDictionary(x => (SkillGemDatSocketType)x.Key, x => x.Count());
-                        }
-
-                        if (slottedIn == default || Settings.ShowGearSwitchesForSocketedLinks)
-                        {
-                            ImGui.SameLine();
-                            ImGui.TextColored(Color.Yellow.ToImguiVec4(), $"(equippable in {itemName}");
-                            if (Settings.ShowGearLinks)
-                            {
-                                ImGui.SameLine(0, 0);
-                                DrawSocketLink(moveTo.link);
-                            }
-
                             ImGui.SameLine(0, 0);
-                            ImGui.TextColored(Color.Yellow.ToImguiVec4(), ")");
+                            DrawSocketLink(moveTo.link);
                         }
+                        ImGui.SameLine(0, 0);
+                        ImGui.TextColored(Color.Yellow.ToImguiVec4(), ")");
                     }
 
                     ImGui.Indent();
                     var perColorIndex = new ConcurrentDictionary<SkillGemDatSocketType, int>();
                     var first = true;
+                    var showAcquisition = Settings.ShowGemAcquisition;
+                    var characterClass = profile.Profile.CharacterClass;
+                    if (string.IsNullOrEmpty(characterClass))
+                        characterClass = "Witch";
+                    if (showAcquisition)
+                        EnsureAcquisitionData();
                     foreach (var gem in gemSet.Gems)
                     {
                         if (first)
                         {
                             first = false;
                         }
-                        else
+                        else if (!showAcquisition)
                         {
                             ImGui.SameLine();
                             ImGui.Text("-");
@@ -234,9 +332,80 @@ public class GemGuide : BaseSettingsPlugin<GemGuideSettings>
                                 GetGemTextColor(gemSocketType).ToImgui());
                             ImGui.Text(GetGemText(gemSocketType));
                         }
+
+                        if (showAcquisition && _questAcquisition != null && _vendorAcquisition != null)
+                        {
+                            var namesToTry = new List<string>();
+                            var gemDisplayName = gem.Name ?? translateSkill.Name ?? translateSkill.BaseName;
+                            if (!string.IsNullOrEmpty(gemDisplayName))
+                                namesToTry.Add(gemDisplayName);
+                            if (!string.IsNullOrEmpty(translateSkill.BaseName) && !namesToTry.Contains(translateSkill.BaseName))
+                                namesToTry.Add(translateSkill.BaseName);
+                            if (!string.IsNullOrEmpty(translateSkill.Name) && !namesToTry.Contains(translateSkill.Name))
+                                namesToTry.Add(translateSkill.Name);
+                            if (translateSkill.IsSupport && !string.IsNullOrEmpty(translateSkill.Name) && !translateSkill.Name.EndsWith(" Support", StringComparison.Ordinal))
+                                namesToTry.Add(translateSkill.Name + " Support");
+                            var buyList = new List<(string act, string quest)>();
+                            var questList = new List<(string act, string quest)>();
+                            foreach (var name in namesToTry)
+                            {
+                                if (buyList.Count == 0)
+                                    buyList = GetAcquisitionForGem(_vendorAcquisition, characterClass, name);
+                                if (questList.Count == 0)
+                                    questList = GetAcquisitionForGem(_questAcquisition, characterClass, name);
+                                if (buyList.Count > 0 && questList.Count > 0)
+                                    break;
+                            }
+                            if (buyList.Count > 0 || questList.Count > 0)
+                            {
+                                var buySet = buyList.ToHashSet();
+                                var questSet = questList.ToHashSet();
+                                var combined = buySet.Union(questSet)
+                                    .OrderBy(x => x.act)
+                                    .ThenBy(x => x.quest)
+                                    .Select(x =>
+                                    {
+                                        var fromBuy = buySet.Contains(x);
+                                        var fromQuest = questSet.Contains(x);
+                                        var tag = fromBuy && fromQuest ? " [Buy, Quest]" : fromBuy ? " [Buy]" : " [Quest]";
+                                        return $"{x.act} ({x.quest}){tag}";
+                                    })
+                                    .ToList();
+                                if (combined.Count > 0)
+                                {
+                                    ImGui.SameLine(0, 4);
+                                    using (ImGuiHelpers.UseStyleColor(ImGuiCol.Text, Color.Gray.ToImgui()))
+                                    {
+                                        ImGui.Text(string.Join(", ", combined));
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     ImGui.Unindent();
+                }
+
+                if (Settings.ShowEquippedButNotRequiredGems && allEquippedGemIds != null)
+                {
+                    var requiredIds = activeSet.GemSets.SelectMany(gs => gs.Gems).Select(g => g.VariantId).ToHashSet();
+                    var equippedButNotRequired = allEquippedGemIds.Except(requiredIds).ToList();
+                    if (equippedButNotRequired.Count > 0)
+                    {
+                        ImGui.Separator();
+                        ImGui.TextColored(Color.Gray.ToImguiVec4(), "Equipped but not in build:");
+                        ImGui.Indent();
+                        var first = true;
+                        foreach (var id in equippedButNotRequired.OrderBy(x => TranslateSkill(x).Name))
+                        {
+                            if (!first) ImGui.SameLine(0, 4);
+                            first = false;
+                            var t = TranslateSkill(id);
+                            using (ImGuiHelpers.UseStyleColor(ImGuiCol.Text, Color.Gray.ToImgui()))
+                                ImGui.Text(t.Name);
+                        }
+                        ImGui.Unindent();
+                    }
                 }
             }
 
@@ -256,7 +425,7 @@ public class GemGuide : BaseSettingsPlugin<GemGuideSettings>
         {
             if (matchDict == null || moveGemMatches == null)
             {
-                (matchDict, moveGemMatches) = GetGemData();
+                (matchDict, moveGemMatches, _) = GetGemData();
             }
 
             var visibleStashVisibleInventoryItems = purchaseWindow.TabContainer.VisibleStash.VisibleInventoryItems
@@ -314,6 +483,40 @@ public class GemGuide : BaseSettingsPlugin<GemGuideSettings>
 
                         ImGui.EndTooltip();
                     }
+                }
+            }
+
+            var requiredGemNames = activeSet.GemSets
+                .SelectMany(gs => gs.Gems)
+                .SelectMany(g => new[] { g.Name, TranslateSkill(g.VariantId).BaseName }.Where(x => !string.IsNullOrEmpty(x)))
+                .ToHashSet();
+            var requiredCountPerGem = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+            foreach (var g in activeSet.GemSets.SelectMany(gs => gs.Gems))
+            {
+                var baseName = TranslateSkill(g.VariantId).BaseName;
+                if (!string.IsNullOrEmpty(baseName))
+                    requiredCountPerGem[baseName] = requiredCountPerGem.GetValueOrDefault(baseName, 0) + 1;
+            }
+            var ownedGems = ItemData.StaticPlayerData.OwnedGems.GroupBy(x => x.BaseName).ToDictionary(x => x.Key, x => x.Count(), StringComparer.OrdinalIgnoreCase);
+            foreach (var invItem in purchaseWindow.TabContainer.VisibleStash.VisibleInventoryItems)
+            {
+                var itemData = new ItemData(invItem.Item, GameController);
+                if (itemData.GemInfo is not { IsGem: true })
+                    continue;
+                if (!requiredGemNames.Contains(itemData.BaseName))
+                    continue;
+                var requiredCount = requiredCountPerGem.GetValueOrDefault(itemData.BaseName, 1);
+                if (ownedGems.GetValueOrDefault(itemData.BaseName, 0) >= requiredCount)
+                    continue;
+                var frameColor = Settings.PurchaseRequiredGemsFrameColor.Value;
+                var hoveredItem = GetHoveredItem();
+                if (hoveredItem != null && !invItem.Equals(hoveredItem) && (hoveredItem.Tooltip?.GetClientRectCache.Intersects(invItem.GetClientRectCache) ?? false))
+                    frameColor.A = (byte)(frameColor.A * (45.0 / 255));
+                Graphics.DrawFrame(invItem.GetClientRectCache.Inflated(-10, -10), frameColor, 10, Settings.PurchaseUpgradesFrameThickness.Value, 0);
+                if (invItem.Equals(hoveredItem) && ImGui.BeginTooltip())
+                {
+                    ImGui.TextColored(Color.Cyan.ToImguiVec4(), "Required gem");
+                    ImGui.EndTooltip();
                 }
             }
         }
@@ -452,7 +655,8 @@ public class GemGuide : BaseSettingsPlugin<GemGuideSettings>
 
     private (
         Dictionary<GemSet, (Entity item, List<(string Id, SocketColor socketColor)> sockets)> matchDict,
-        Dictionary<GemSet, (Entity item, List<(string Id, SocketColor socketColor)> link)> moveGemMatches
+        Dictionary<GemSet, (Entity item, List<(string Id, SocketColor socketColor)> link)> moveGemMatches,
+        HashSet<string> allEquippedGemIds
         ) GetGemData()
     {
         var activeSet = GetActiveSet().activeSet;
@@ -480,10 +684,11 @@ public class GemGuide : BaseSettingsPlugin<GemGuideSettings>
             .SelectMany(x => x.Items)
             .ToList();
         var itemLinks = GetItemLinks(items);
+        var allEquippedGemIds = itemLinks.SelectMany(il => il.gems.Select(g => g.Id)).Where(id => id != null).ToHashSet();
         var (matches, unpairedSets) = GetMatches(activeSet, itemLinks);
         var matchDict = matches.ToDictionary(x => x.set, x => (x.item, x.sockets));
         var moveGemMatches = GetMoveMatches(activeSet.GemSets, matchDict, itemLinks).ToDictionary(x => x.set, x => (x.item, x.link));
-        return (matchDict, moveGemMatches);
+        return (matchDict, moveGemMatches, allEquippedGemIds);
     }
 
     private static string GetItemName(Entity item)

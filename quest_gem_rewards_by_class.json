@@ -1,0 +1,1006 @@
+{
+  "Witch": {
+    "Act 1": {
+      "Enemy at the Gate": [
+        "Blight",
+        "Freezing Pulse",
+        "Kinetic Bolt",
+        "Lightning Tendrils",
+        "Raise Zombie",
+        "Rolling Magma"
+      ],
+      "The Caged Brute": [
+        "Added Lightning Damage Support",
+        "Bodyswap",
+        "Clarity",
+        "Combustion Support",
+        "Devour Support",
+        "Efficacy Support",
+        "Flame Dash",
+        "Infernal Legion Support",
+        "Lightning Warp",
+        "Minion Damage Support",
+        "Summon Skeletons",
+        "Unbound Ailments Support",
+        "Void Manipulation Support",
+        "Wither"
+      ],
+      "The Siren's Cadence": [
+        "Arc",
+        "Blazing Salvo",
+        "Creeping Frost",
+        "Essence Drain",
+        "Ice Nova",
+        "Manabond",
+        "Scorching Ray",
+        "Volatile Dead"
+      ],
+      "Breaking Some Eggs": [
+        "Contagion",
+        "Detonate Dead",
+        "Flame Wall",
+        "Frost Bomb",
+        "Frostblink",
+        "Orb of Storms",
+        "Summon Raging Spirit"
+      ],
+      "Mercy Mission": [
+        "Chance to Poison Support",
+        "Elemental Proliferation Support",
+        "Infused Channelling Support",
+        "Spell Cascade Support",
+        "Summon Phantasm Support"
+      ]
+    },
+    "Act 2": {
+      "The Great White Beast": [
+        "Rustic Sash"
+      ],
+      "Sharp and Cruel": [
+        "Concentrated Effect Support",
+        "Controlled Destruction Support",
+        "Cruelty Support",
+        "Elemental Focus Support",
+        "Faster Casting Support",
+        "Fresh Meat Support",
+        "Kinetic Instability Support",
+        "Living Lightning Support",
+        "Minion Speed Support",
+        "Overcharge Support",
+        "Predator Support",
+        "Sacred Wisps Support",
+        "Trinity Support"
+      ],
+      "Intruders in Black": [
+        "Herald of Ash",
+        "Arcane Cloak",
+        "Arctic Armour",
+        "Cold Snap",
+        "Desecrate",
+        "Galvanic Field",
+        "Herald of Ice",
+        "Herald of Thunder",
+        "Wall of Force"
+      ]
+    },
+    "Act 3": {
+      "Lost in Love": [
+        "Bane",
+        "Conductivity",
+        "Despair",
+        "Discipline",
+        "Elemental Weakness",
+        "Enfeeble",
+        "Flammability",
+        "Frostbite",
+        "Malevolence",
+        "Purity of Elements",
+        "Spellslinger",
+        "Temporal Chains",
+        "Zealotry"
+      ],
+      "A Fixture of Fate": [
+        "Archmage Support",
+        "Blasphemy Support",
+        "Burning Damage Support",
+        "Cold Penetration Support",
+        "Energy Leech Support",
+        "Feeding Frenzy Support",
+        "Fire Penetration Support",
+        "Focused Channelling Support",
+        "Impending Doom Support",
+        "Intensify Support",
+        "Lightning Penetration Support",
+        "Meat Shield Support",
+        "Pinpoint Support",
+        "Sacrifice Support",
+        "Swift Affliction Support"
+      ],
+      "Sever the Right Hand": [
+        "Ball Lightning",
+        "Crackling Lance",
+        "Cremation",
+        "Eye of Winter",
+        "Firestorm",
+        "Flameblast",
+        "Glacial Cascade",
+        "Hexblast",
+        "Kinetic Blast",
+        "Kinetic Rain",
+        "Lightning Conduit",
+        "Raise Spectre",
+        "Somatic Shell",
+        "Soulrend",
+        "Stormbind",
+        "Summon Reaper"
+      ]
+    },
+    "Act 4": {
+      "The Eternal Nightmare": [
+        "Bonechill Support",
+        "Chain Support",
+        "Decay Support",
+        "Greater Multiple Projectiles Support",
+        "Hex Bloom Support",
+        "Immolate Support",
+        "Increased Area of Effect Support",
+        "Multistrike Support",
+        "Spell Echo Support",
+        "Unleash Support"
+      ],
+      "Breaking the Seal": [
+        "Hydrosphere",
+        "Sigil of Power",
+        "Summon Carrion Golem",
+        "Summon Chaos Golem",
+        "Summon Flame Golem",
+        "Summon Ice Golem",
+        "Summon Lightning Golem",
+        "Summon Stone Golem",
+        "Void Sphere"
+      ]
+    }
+  },
+  "Shadow": {
+    "Act 1": {
+      "Enemy at the Gate": [
+        "Blight",
+        "Cobra Lash",
+        "Ethereal Knives",
+        "Explosive Trap",
+        "Freezing Pulse",
+        "Stormblast Mine"
+      ],
+      "The Caged Brute": [
+        "Added Cold Damage Support",
+        "Added Lightning Damage Support",
+        "Clarity",
+        "Faster Attacks Support",
+        "Flame Dash",
+        "Multiple Projectiles Support",
+        "Multiple Traps Support",
+        "Precision",
+        "Siphoning Trap",
+        "Smoke Mine",
+        "Unearth",
+        "Void Manipulation Support",
+        "Whirling Blades",
+        "Withering Step"
+      ],
+      "The Siren's Cadence": [
+        "Blade Vortex",
+        "Essence Drain",
+        "Fire Trap",
+        "Icicle Mine",
+        "Lightning Trap",
+        "Reave",
+        "Venom Gyre",
+        "Volatile Dead",
+        "Voltaxic Burst"
+      ],
+      "Breaking Some Eggs": [
+        "Bear Trap",
+        "Contagion",
+        "Dash",
+        "Detonate Dead",
+        "Frostblink",
+        "Orb of Storms"
+      ],
+      "Mercy Mission": [
+        "Elemental Proliferation Support",
+        "Infused Channelling Support",
+        "Momentum Support",
+        "Pierce Support",
+        "Spell Cascade Support",
+        "Swift Assembly Support",
+        "Volley Support"
+      ]
+    },
+    "Act 2": {
+      "The Great White Beast": [
+        "Rustic Sash"
+      ],
+      "Sharp and Cruel": [
+        "Deadly Ailments Support",
+        "Elemental Focus Support",
+        "Faster Casting Support",
+        "Melee Physical Damage Support",
+        "Nightblade Support",
+        "Trap and Mine Damage Support",
+        "Trinity Support"
+      ],
+      "Intruders in Black": [
+        "Herald of Ash",
+        "Arcane Cloak",
+        "Arctic Armour",
+        "Assassin's Mark",
+        "Blade Blast",
+        "Blood Rage",
+        "Cold Snap",
+        "Herald of Agony",
+        "Herald of Ice",
+        "Herald of Thunder",
+        "Summon Skitterbots"
+      ]
+    },
+    "Act 3": {
+      "Lost in Love": [
+        "Bane",
+        "Conductivity",
+        "Despair",
+        "Elemental Weakness",
+        "Enfeeble",
+        "Flammability",
+        "Frostbite",
+        "Hatred",
+        "Malevolence",
+        "Plague Bearer",
+        "Temporal Chains",
+        "Wrath"
+      ],
+      "A Fixture of Fate": [
+        "Archmage Support",
+        "Charged Mines Support",
+        "Charged Traps Support",
+        "Cold Penetration Support",
+        "Critical Strike Affliction Support",
+        "Energy Leech Support",
+        "Faster Projectiles Support",
+        "Focused Channelling Support",
+        "High-Impact Mine Support",
+        "Ice Bite Support",
+        "Impending Doom Support",
+        "Innervate Support",
+        "Lightning Penetration Support",
+        "Pinpoint Support",
+        "Second Wind Support",
+        "Swift Affliction Support"
+      ],
+      "Sever the Right Hand": [
+        "Ball Lightning",
+        "Blade Flurry",
+        "Bladefall",
+        "Charged Dash",
+        "Cremation",
+        "Flamethrower Trap",
+        "Hexblast",
+        "Lightning Spire Trap",
+        "Pestilent Strike",
+        "Pyroclast Mine",
+        "Seismic Trap",
+        "Soulrend"
+      ]
+    },
+    "Act 4": {
+      "The Eternal Nightmare": [
+        "Barrage Support",
+        "Bonechill Support",
+        "Chain Support",
+        "Cluster Traps Support",
+        "Greater Multiple Projectiles Support",
+        "Greater Volley Support",
+        "Increased Area of Effect Support",
+        "Minefield Support",
+        "Multistrike Support",
+        "Returning Projectiles Support",
+        "Spell Echo Support",
+        "Unleash Support",
+        "Vile Toxins Support",
+        "Withering Touch Support"
+      ],
+      "Breaking the Seal": [
+        "Ambush",
+        "Summon Chaos Golem",
+        "Summon Flame Golem",
+        "Summon Ice Golem",
+        "Summon Lightning Golem",
+        "Summon Stone Golem",
+        "Temporal Rift",
+        "Tornado",
+        "Void Sphere"
+      ]
+    }
+  },
+  "Ranger": {
+    "Act 1": {
+      "Enemy at the Gate": [
+        "Caustic Arrow",
+        "Frost Blades",
+        "Galvanic Arrow",
+        "Ice Shot",
+        "Split Arrow"
+      ],
+      "The Caged Brute": [
+        "Added Cold Damage Support",
+        "Arrow Nova Support",
+        "Blink Arrow",
+        "Faster Attacks Support",
+        "Manaforged Arrows Support",
+        "Melee Splash Support",
+        "Multiple Projectiles Support",
+        "Precision",
+        "Smoke Mine",
+        "Void Manipulation Support",
+        "Whirling Blades"
+      ],
+      "The Siren's Cadence": [
+        "Elemental Hit",
+        "Lightning Arrow",
+        "Lightning Strike",
+        "Poisonous Concoction",
+        "Rain of Arrows",
+        "Reave",
+        "Siege Ballista",
+        "Toxic Rain"
+      ],
+      "Breaking Some Eggs": [
+        "Bear Trap",
+        "Dash",
+        "Puncture",
+        "Shrapnel Ballista",
+        "Sniper's Mark"
+      ],
+      "Mercy Mission": [
+        "Chance to Poison Support",
+        "Mirage Archer Support",
+        "Pierce Support",
+        "Volley Support"
+      ]
+    },
+    "Act 2": {
+      "The Great White Beast": [
+        "Rustic Sash"
+      ],
+      "Sharp and Cruel": [
+        "Close Combat Support",
+        "Elemental Damage with Attacks Support",
+        "Trinity Support",
+        "Vicious Projectiles Support"
+      ],
+      "Intruders in Black": [
+        "Herald of Ash",
+        "Arctic Armour",
+        "Blood Rage",
+        "Ensnaring Arrow",
+        "Frenzy",
+        "Herald of Agony",
+        "Herald of Ice",
+        "Herald of Thunder",
+        "Poacher's Mark"
+      ]
+    },
+    "Act 3": {
+      "Lost in Love": [
+        "Alchemist's Mark",
+        "Despair",
+        "Grace",
+        "Hatred"
+      ],
+      "A Fixture of Fate": [
+        "Critical Strike Affliction Support",
+        "Focused Ballista Support",
+        "Fork Support",
+        "Fortify Support",
+        "Hypothermia Support",
+        "Ice Bite Support",
+        "Impale Support",
+        "Life Leech Support",
+        "Second Wind Support",
+        "Windburst Support"
+      ],
+      "Sever the Right Hand": [
+        "Artillery Ballista",
+        "Blade Flurry",
+        "Blast Rain",
+        "Charged Dash",
+        "Conflagration",
+        "Explosive Concoction",
+        "Scourge Arrow",
+        "Storm Rain",
+        "Thunderstorm",
+        "Tornado Shot",
+        "Wild Strike"
+      ]
+    },
+    "Act 4": {
+      "The Eternal Nightmare": [
+        "Barrage Support",
+        "Chain Support",
+        "Greater Multiple Projectiles Support",
+        "Greater Volley Support",
+        "Increased Area of Effect Support",
+        "Multistrike Support",
+        "Returning Projectiles Support",
+        "Rupture Support",
+        "Spell Echo Support",
+        "Withering Touch Support"
+      ],
+      "Breaking the Seal": [
+        "Snipe",
+        "Summon Chaos Golem",
+        "Summon Flame Golem",
+        "Summon Ice Golem",
+        "Summon Lightning Golem",
+        "Summon Stone Golem",
+        "Tornado"
+      ]
+    }
+  },
+  "Duelist": {
+    "Act 1": {
+      "Enemy at the Gate": [
+        "Cleave",
+        "Galvanic Arrow",
+        "Molten Strike",
+        "Perforate",
+        "Splitting Steel"
+      ],
+      "The Caged Brute": [
+        "Added Fire Damage Support",
+        "Blink Arrow",
+        "Enduring Cry",
+        "Faster Attacks Support",
+        "Intimidating Cry",
+        "Leap Slam",
+        "Lifetap Support",
+        "Maim Support",
+        "Melee Splash Support",
+        "Multiple Projectiles Support",
+        "Precision",
+        "Vitality",
+        "Whirling Blades"
+      ],
+      "The Siren's Cadence": [
+        "Earthshatter",
+        "Holy Sweep",
+        "Lacerate",
+        "Rain of Arrows",
+        "Shattering Steel",
+        "Volcanic Fissure"
+      ],
+      "Breaking Some Eggs": [
+        "Blood and Sand",
+        "Crushing Fist",
+        "Dash",
+        "Decoy Totem",
+        "Puncture",
+        "Shield Charge",
+        "Sniper's Mark",
+        "Vigilant Strike",
+        "War Banner"
+      ],
+      "Mercy Mission": [
+        "Ancestral Call Support",
+        "Chance to Poison Support",
+        "Mirage Archer Support",
+        "Momentum Support",
+        "Pierce Support",
+        "Ruthless Support",
+        "Volley Support"
+      ]
+    },
+    "Act 2": {
+      "The Great White Beast": [
+        "Rustic Sash"
+      ],
+      "Sharp and Cruel": [
+        "Close Combat Support",
+        "Elemental Damage with Attacks Support",
+        "Melee Physical Damage Support",
+        "Rage Support",
+        "Sadism Support",
+        "Trinity Support",
+        "Vicious Projectiles Support"
+      ],
+      "Intruders in Black": [
+        "Herald of Ash",
+        "Ancestral Cry",
+        "Blood Rage",
+        "Corrupting Fever",
+        "Defiance Banner",
+        "Eviscerate",
+        "Flesh and Stone",
+        "Frenzy",
+        "Glacial Shield Swipe",
+        "Herald of Ice",
+        "Herald of Thunder",
+        "Poacher's Mark",
+        "Seismic Cry",
+        "Swordstorm",
+        "Warlord's Mark"
+      ]
+    },
+    "Act 3": {
+      "Lost in Love": [
+        "Dread Banner",
+        "Grace",
+        "Hatred",
+        "Petrified Blood",
+        "Pride",
+        "Rallying Cry"
+      ],
+      "A Fixture of Fate": [
+        "Arrogance Support",
+        "Bloodthirst Support",
+        "Expert Retaliation Support",
+        "Fortify Support",
+        "Hypothermia Support",
+        "Impale Support",
+        "Life Leech Support",
+        "Pulverise Support",
+        "Urgent Orders Support",
+        "Windburst Support"
+      ],
+      "Sever the Right Hand": [
+        "Bladestorm",
+        "Blast Rain",
+        "Charged Dash",
+        "Cyclone",
+        "Ice Crash",
+        "Lancing Steel",
+        "Spectral Shield Throw",
+        "Thunderstorm"
+      ]
+    },
+    "Act 4": {
+      "The Eternal Nightmare": [
+        "Barrage Support",
+        "Behead Support",
+        "Chain Support",
+        "Fist of War Support",
+        "Greater Multiple Projectiles Support",
+        "Greater Volley Support",
+        "Increased Area of Effect Support",
+        "Multistrike Support",
+        "Spell Echo Support",
+        "Trauma Support"
+      ],
+      "Breaking the Seal": [
+        "Summon Chaos Golem",
+        "Summon Flame Golem",
+        "Summon Ice Golem",
+        "Summon Lightning Golem",
+        "Summon Stone Golem"
+      ]
+    }
+  },
+  "Marauder": {
+    "Act 1": {
+      "Enemy at the Gate": [
+        "Ground Slam",
+        "Molten Strike",
+        "Shield Crush"
+      ],
+      "The Caged Brute": [
+        "Added Fire Damage Support",
+        "Enduring Cry",
+        "Faster Attacks Support",
+        "Flamewood Support",
+        "Intimidating Cry",
+        "Leap Slam",
+        "Lifetap Support",
+        "Melee Splash Support",
+        "Vitality"
+      ],
+      "The Siren's Cadence": [
+        "Chain Hook",
+        "Earthshatter",
+        "Holy Sweep",
+        "Infernal Blow",
+        "Static Strike",
+        "Sunder",
+        "Volcanic Fissure"
+      ],
+      "Breaking Some Eggs": [
+        "Crushing Fist",
+        "Decoy Totem",
+        "Shield Charge",
+        "Steelskin",
+        "Vigilant Strike"
+      ],
+      "Mercy Mission": [
+        "Ancestral Call Support",
+        "Chance to Bleed Support",
+        "Momentum Support"
+      ]
+    },
+    "Act 2": {
+      "The Great White Beast": [
+        "Rustic Sash"
+      ],
+      "Sharp and Cruel": [
+        "Close Combat Support",
+        "Cruelty Support",
+        "Elemental Damage with Attacks Support",
+        "Melee Physical Damage Support",
+        "Rage Support",
+        "Shockwave Support",
+        "Volatility Support"
+      ],
+      "Intruders in Black": [
+        "Herald of Ash",
+        "Ancestral Cry",
+        "Corrupting Fever",
+        "Eviscerate",
+        "Herald of Ice",
+        "Herald of Thunder",
+        "Molten Shell",
+        "Seismic Cry",
+        "Warlord's Mark"
+      ]
+    },
+    "Act 3": {
+      "Lost in Love": [
+        "Anger",
+        "Determination",
+        "General's Cry",
+        "Infernal Cry",
+        "Petrified Blood",
+        "Pride",
+        "Punishment",
+        "Vengeful Cry",
+        "Vulnerability"
+      ],
+      "A Fixture of Fate": [
+        "Arrogance Support",
+        "Bloodthirst Support",
+        "Controlled Blaze Support",
+        "Corrupting Cry Support",
+        "Fortify Support",
+        "Impale Support",
+        "Life Leech Support",
+        "More Duration Support",
+        "Pulverise Support",
+        "Urgent Orders Support"
+      ],
+      "Sever the Right Hand": [
+        "Cyclone",
+        "Earthquake",
+        "Ice Crash",
+        "Rage Vortex",
+        "Tectonic Slam"
+      ]
+    },
+    "Act 4": {
+      "The Eternal Nightmare": [
+        "Behead Support",
+        "Brutality Support",
+        "Chain Support",
+        "Eternal Blessing Support",
+        "Fist of War Support",
+        "Greater Multiple Projectiles Support",
+        "Increased Area of Effect Support",
+        "Multiple Totems Support",
+        "Multistrike Support",
+        "Overexertion Support",
+        "Spell Echo Support",
+        "Trauma Support"
+      ],
+      "Breaking the Seal": [
+        "Berserk",
+        "Summon Chaos Golem",
+        "Summon Flame Golem",
+        "Summon Ice Golem",
+        "Summon Lightning Golem",
+        "Summon Stone Golem"
+      ]
+    }
+  },
+  "Templar": {
+    "Act 1": {
+      "Enemy at the Gate": [
+        "Frostbolt",
+        "Lightning Tendrils",
+        "Molten Strike",
+        "Purifying Flame",
+        "Rolling Magma",
+        "Smite"
+      ],
+      "The Caged Brute": [
+        "Added Fire Damage Support",
+        "Added Lightning Damage Support",
+        "Clarity",
+        "Combustion Support",
+        "Flame Dash",
+        "Leap Slam",
+        "Lifetap Support",
+        "Melee Splash Support",
+        "Vitality"
+      ],
+      "The Siren's Cadence": [
+        "Absolution",
+        "Blazing Salvo",
+        "Ice Nova",
+        "Manabond",
+        "Scorching Ray",
+        "Searing Bond",
+        "Static Strike",
+        "Storm Brand",
+        "Storm Burst",
+        "Storm Call",
+        "Wintertide Brand"
+      ],
+      "Breaking Some Eggs": [
+        "Flame Wall",
+        "Frost Bomb",
+        "Frostblink",
+        "Holy Flame Totem",
+        "Shield Charge",
+        "Summon Holy Relic",
+        "Vigilant Strike"
+      ],
+      "Mercy Mission": [
+        "Ancestral Call Support",
+        "Arcane Surge Support",
+        "Chance to Bleed Support",
+        "Infused Channelling Support",
+        "Ruthless Support",
+        "Spell Cascade Support"
+      ]
+    },
+    "Act 2": {
+      "The Great White Beast": [
+        "Rustic Sash"
+      ],
+      "Sharp and Cruel": [
+        "Concentrated Effect Support",
+        "Controlled Destruction Support",
+        "Cruelty Support",
+        "Elemental Damage with Attacks Support",
+        "Elemental Focus Support",
+        "Faster Casting Support",
+        "Melee Physical Damage Support",
+        "Shockwave Support"
+      ],
+      "Intruders in Black": [
+        "Herald of Ash",
+        "Arcane Cloak",
+        "Brand Recall",
+        "Divine Retribution",
+        "Herald of Ice",
+        "Herald of Purity",
+        "Herald of Thunder",
+        "Wave of Conviction"
+      ]
+    },
+    "Act 3": {
+      "Lost in Love": [
+        "Battlemage's Cry",
+        "Conductivity",
+        "Elemental Weakness",
+        "Enfeeble",
+        "Flammability",
+        "Frostbite",
+        "Punishment",
+        "Vulnerability",
+        "Zealotry"
+      ],
+      "A Fixture of Fate": [
+        "Archmage Support",
+        "Arrogance Support",
+        "Blasphemy Support",
+        "Burning Damage Support",
+        "Cold Penetration Support",
+        "Energy Leech Support",
+        "Fire Penetration Support",
+        "Fortify Support",
+        "Guardian's Blessing Support",
+        "Intensify Support",
+        "Lightning Penetration Support",
+        "Pulverise Support",
+        "Swiftbrand Support"
+      ],
+      "Sever the Right Hand": [
+        "Armageddon Brand",
+        "Consecrated Path",
+        "Divine Ire",
+        "Dominating Blow",
+        "Firestorm",
+        "Flameblast",
+        "Ice Crash",
+        "Penance Brand",
+        "Shock Nova",
+        "Shockwave Totem",
+        "Stormbind"
+      ]
+    },
+    "Act 4": {
+      "The Eternal Nightmare": [
+        "Arcanist Brand",
+        "Chain Support",
+        "Fist of War Support",
+        "Frigid Bond Support",
+        "Greater Multiple Projectiles Support",
+        "Ignite Proliferation Support",
+        "Increased Area of Effect Support",
+        "Multiple Totems Support",
+        "Multistrike Support",
+        "Spell Echo Support",
+        "Spellblade Support",
+        "Unleash Support"
+      ],
+      "Breaking the Seal": [
+        "Frozen Legion",
+        "Hydrosphere",
+        "Sigil of Power",
+        "Summon Carrion Golem",
+        "Summon Chaos Golem",
+        "Summon Flame Golem",
+        "Summon Ice Golem",
+        "Summon Lightning Golem",
+        "Summon Stone Golem",
+        "Void Sphere"
+      ]
+    }
+  },
+  "Scion": {
+    "Act 1": {
+      "Enemy at the Gate": [
+        "Lightning Tendrils",
+        "Molten Strike",
+        "Split Arrow",
+        "Splitting Steel"
+      ],
+      "The Caged Brute": [
+        "Added Cold Damage Support",
+        "Added Fire Damage Support",
+        "Added Lightning Damage Support",
+        "Blink Arrow",
+        "Faster Attacks Support",
+        "Flame Dash",
+        "Leap Slam",
+        "Lifetap Support",
+        "Melee Splash Support",
+        "Multiple Projectiles Support",
+        "Unbound Ailments Support",
+        "Withering Step"
+      ],
+      "The Siren's Cadence": [
+        "Blade Vortex",
+        "Exsanguinate",
+        "Ice Nova",
+        "Rain of Arrows",
+        "Scorching Ray",
+        "Spectral Helix",
+        "Static Strike",
+        "Storm Burst"
+      ],
+      "Breaking Some Eggs": [
+        "Bear Trap",
+        "Dash",
+        "Decoy Totem",
+        "Frost Bomb",
+        "Frostblink",
+        "Shield Charge",
+        "Vigilant Strike"
+      ],
+      "Mercy Mission": [
+        "Ancestral Call Support",
+        "Arcane Surge Support",
+        "Chance to Bleed Support",
+        "Chance to Poison Support",
+        "Elemental Proliferation Support",
+        "Pierce Support",
+        "Ruthless Support",
+        "Spell Cascade Support",
+        "Summon Phantasm Support",
+        "Volley Support"
+      ]
+    },
+    "Act 2": {
+      "The Great White Beast": [
+        "Rustic Sash"
+      ],
+      "Sharp and Cruel": [
+        "Concentrated Effect Support",
+        "Cruelty Support",
+        "Deadly Ailments Support",
+        "Elemental Damage with Attacks Support",
+        "Faster Casting Support",
+        "Melee Physical Damage Support",
+        "Sadism Support",
+        "Vicious Projectiles Support"
+      ],
+      "Intruders in Black": [
+        "Herald of Ash",
+        "Arctic Armour",
+        "Corrupting Fever",
+        "Frenzy",
+        "Herald of Ice",
+        "Herald of Thunder"
+      ]
+    },
+    "Act 3": {
+      "Lost in Love": [
+        "Anger",
+        "Bane",
+        "Conductivity",
+        "Elemental Weakness",
+        "Flammability",
+        "Frostbite",
+        "Hatred",
+        "Malevolence",
+        "Petrified Blood",
+        "Punishment",
+        "Temporal Chains",
+        "Vulnerability",
+        "Wrath",
+        "Zealotry"
+      ],
+      "A Fixture of Fate": [
+        "Arrogance Support",
+        "Bloodthirst Support",
+        "Cold Penetration Support",
+        "Energy Leech Support",
+        "Fire Penetration Support",
+        "Fortify Support",
+        "Ice Bite Support",
+        "Impending Doom Support",
+        "Innervate Support",
+        "Intensify Support",
+        "Life Leech Support",
+        "Lightning Penetration Support"
+      ],
+      "Sever the Right Hand": [
+        "Blade Flurry",
+        "Bladefall",
+        "Charged Dash",
+        "Cyclone",
+        "Divine Ire",
+        "Flameblast",
+        "Hexblast",
+        "Reap",
+        "Soulrend",
+        "Tectonic Slam",
+        "Tornado Shot"
+      ]
+    },
+    "Act 4": {
+      "The Eternal Nightmare": [
+        "Barrage Support",
+        "Chain Support",
+        "Decay Support",
+        "Frigid Bond Support",
+        "Greater Multiple Projectiles Support",
+        "Greater Volley Support",
+        "Immolate Support",
+        "Increased Area of Effect Support",
+        "Multistrike Support",
+        "Returning Projectiles Support",
+        "Spell Echo Support",
+        "Unleash Support"
+      ],
+      "Breaking the Seal": [
+        "Flame Link",
+        "Intuitive Link",
+        "Soul Link",
+        "Summon Chaos Golem",
+        "Summon Flame Golem",
+        "Summon Ice Golem",
+        "Summon Lightning Golem",
+        "Summon Stone Golem",
+        "Void Sphere"
+      ]
+    }
+  }
+}
